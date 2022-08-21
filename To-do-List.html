@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=DynaPuff:wght@400;500&family=Lato:wght@100&family=Montserrat:wght@100;300;400&family=Open+Sans:wght@300&family=Square+Peg&display=swap" rel="stylesheet">
+    
+    <title>To Do List</title>
+    <style>
+         * {
+            padding: 0;
+            margin: 0;
+            background-color: bisque;
+        }
+        .head {
+            font-family: 'Dancing Script', cursive;
+            font-size: 40px;
+            margin-top: 30px;
+            margin-bottom: 50px; 
+            color:rgb(112, 42, 193);
+            display: flex;
+            justify-content: center;
+            
+          }
+
+
+        .task-list {
+            font-family: 'DynaPuff', cursive;
+            margin-left: 300px;
+            margin-top: 5px;
+        }
+
+        #start-message {
+            margin: 0px;
+            font-family: 'DynaPuff', cursive;
+            
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            border: 3px solid rgb(192, 138, 243);
+            padding: 3px 8px;
+            margin: 5px 20px;
+            border-radius: 5px;
+            width: 680px;
+        }
+
+        .task p {
+            margin-left: 4px;
+        }
+
+        .completed {
+            background-color: green;
+            color: white;
+        }
+
+        .completed p {
+            text-decoration: line-through;
+            background-color: green;
+        }
+
+        .input-panel {
+            margin-left: 20%;
+            margin-right: 20%;
+            display: flex;
+            justify-content: center;
+        }
+
+       
+
+        .input-panel button {
+            padding: 4px;
+            width: 25%;
+            background-color: rgb(238, 189, 203);
+            border: 2px solid rgb(125, 13, 230);
+        }
+
+        .input-panel input {
+            height: 23px;
+            padding-left: 4px;
+            width: 68%;
+            margin-right: 5px;;
+        }
+
+    .picture {
+        height: 300px;
+        margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+   
+       #task-name-input {
+        border: 2px solid rgb(125, 13, 230);
+        font-family: 'DynaPuff', cursive;
+        border-radius: 2px;
+       }
+
+       #add-task-btn {
+        background-color: rgb(238, 189, 203);
+        font-family: 'DynaPuff', cursive;
+        font-size: 14px;
+        border-radius: 5px;
+       }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="head">To Do List</h1>
+    </header>
+    
+
+    <div class="input-panel">
+        <input type="text" id="task-name-input">
+        <button id="add-task-btn">Add Task</button>
+    </div>
+
+    <div class="task-list">
+        <p id="start-message">No new tasks</p>
+    </div>
+
+    <div class="picture">
+        <img src="photo.jpeg" alt="">
+    </div>
+
+<script>
+ 
+        let taskNameInput = document.querySelector("#task-name-input");
+        let addTaskButton = document.querySelector("#add-task-btn");
+        let startMessage = document.querySelector("#start-message");
+        let taskList = document.querySelector(".task-list");
+
+        addTaskButton.addEventListener("click", addTaskHandler);
+        taskList.addEventListener("click", changeTaskState);
+
+        function createTask(text) {
+            let div = document.createElement("div");
+            div.classList.add("task");
+
+            let input = document.createElement("input");
+            input.type = "checkbox";
+
+            let p = document.createElement("p");
+            p.innerText = text;
+
+            div.append(input);
+            div.append(p);
+
+            return div;
+        }
+
+        function changeTaskState(e) {
+            // If even came not from checkbox - ignore it
+            if (e.target.nodeName != "input" && e.target.type != "checkbox") {
+                return;
+            }
+
+            if (e.target.checked) {
+                e.target.parentElement.classList.add("completed");
+            } else {
+                e.target.parentElement.classList.remove("completed");
+            }
+        }
+
+        function addTaskHandler() {
+            if (taskNameInput.value) {
+                if (!startMessage.hidden) startMessage.hidden = true;
+
+                let newTask = createTask(taskNameInput.value);
+                taskList.append(newTask);
+                taskNameInput.value = "";
+            } else {
+                alert("Add the task's name");
+            }
+        }
+
+</script>
+
+</body>
+</html>
